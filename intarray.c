@@ -47,8 +47,8 @@ intarray clone_intarray(intarray int_array){
 		new_intarray.data[i]=int_array.data[i];
 	}
 	return new_intarray;
-	
 }
+
 void resize_intarray(intarray* int_array){
 	int_array->data=(int *) realloc(int_array->data,
 		 (2*int_array->alloc)*sizeof(int));
