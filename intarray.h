@@ -1,7 +1,7 @@
 #ifndef INTARRAY
 #define INTARRAY
-typedef struct _intarray intarray;
-typedef struct _intarray* p_intarray;
+typedef struct _intarray* intarray;
+typedef struct _intarray s_intarray;
 struct _intarray {
 	int* data;
 	int alloc;
@@ -11,13 +11,14 @@ struct _intarray {
 intarray init_intarray(int length, int alloc);
 //initialize intarray with length=0
 intarray zero_length_intarray(int alloc);
+void intarray_destroy(intarray int_array);
 void print_intarray(intarray int_array);
 void insert_intarray(intarray int_array, 
 	int index, int value);
 //add a value to the end of the intarray
-void add_intarray(intarray* int_array,int value);
+void add_intarray(intarray int_array,int value);
 intarray clone_intarray(intarray int_array);
-void resize_intarray(intarray* int_array);
+void resize_intarray(intarray int_array);
 //arrange intarray in ascending order
 void asc_sort_intarray(intarray int_array);
 //arrange intarray in descending order

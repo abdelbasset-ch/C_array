@@ -1,14 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "astr.h"
-#include "operations.h"
+#include "tools.h"
 
 
 astr init_astr(int length, int alloc){
-        astr tmp_astr=malloc(sizeof (astr));
+        astr tmp_astr=sp_alloc(sizeof (astr));
 	tmp_astr->length=length;
 	tmp_astr->alloc=alloc;
-	tmp_astr->data=malloc(sizeof(char)*(tmp_astr->alloc));
+	tmp_astr->data=sp_alloc(sizeof(char)*(tmp_astr->alloc));
 	for (int i=0;i<length;i++)
 		tmp_astr->data[i]='_';
 	return tmp_astr;
@@ -16,6 +16,12 @@ astr init_astr(int length, int alloc){
 
 astr zero_length_astr(int alloc){
 	return  init_astr(0,alloc);
+}
+void astr_destroy(astr _astr){
+  if(_astr!=NULL){
+    sp_destroy(_astr->data,sizeof(char)*_astr->alloc);
+    sp_destroy(_astr,sizeof(_astr));
+  }
 }
 
 void print_astr(astr _astr){
@@ -151,7 +157,7 @@ intarray find_astr(astr _astr, char* str){
 			}
 		}
 		if(counter==tmp_astr->length){
-			add_intarray(&tmp_intarray,i);
+			add_intarray(tmp_intarray,i);
 		}
 		counter=0;
 	}
@@ -172,7 +178,7 @@ intarray astr_proper_find(astr _astr, char* str){
 			}
 		}
 		if(counter==tmp_astr->length){
-			add_intarray(&tmp_intarray,i);
+			add_intarray(tmp_intarray,i);
 			i+=tmp_astr->length;
 		}
 		counter=0;

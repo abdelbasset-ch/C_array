@@ -11,8 +11,10 @@ struct _astr {
 	int length;
 };
 
+
 astr init_astr(int length, int alloc);
 astr zero_length_astr(int alloc);
+void astr_destroy(astr _astr);
 void print_astr(astr _astr);
 void insert_astr(astr _astr, 
 	int index, char _char);
