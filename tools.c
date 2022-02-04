@@ -17,11 +17,13 @@ void* sp_alloc(int alloc){
   GLOBAL_ALLOC_MEMO+=alloc;
   return p;
 }
+void destroy(void* p,int p_len){
+  GLOBAL_ALLOC_MEMO-=p_len;
+  free(p);
+}
 void sp_destroy(void* p,int p_alloc){
-  if(p!=NULL){
     GLOBAL_ALLOC_MEMO-=p_alloc;
     free(p);
-  }
 }
 void check_memo_alloc(){
   if(GLOBAL_ALLOC_MEMO!=0){

@@ -18,10 +18,10 @@ astr zero_length_astr(int alloc){
 	return  init_astr(0,alloc);
 }
 void astr_destroy(astr _astr){
-  if(_astr!=NULL){
+  
     sp_destroy(_astr->data,sizeof(char)*_astr->alloc);
     sp_destroy(_astr,sizeof(_astr));
-  }
+  
 }
 
 void print_astr(astr _astr){
@@ -61,16 +61,18 @@ astr clone_astr(astr _astr){
 void resize_astr(astr _astr){
 	_astr->data=(char *) realloc(_astr->data,
 		 (2*_astr->alloc)*sizeof(char));
+	GLOBAL_ALLOC_MEMO+=_astr->alloc;
 	_astr->alloc=2*_astr->alloc;
+	
 }
 
 rstr astr_to_rstr(astr _astr){
-	astr tmp_astr=init_astr(_astr->length+1,_astr->length+1);
+        char* str=sp_alloc(sizeof(char)*_astr->length+1);
 	for (int i=0; i<_astr->length;i++){
-		insert_astr(tmp_astr,i,_astr->data[i]);
+		str[i]=_astr->data[i];
 	}
-	tmp_astr->data[tmp_astr->length-1]='\0';
-	return tmp_astr->data;
+	str[_astr->length]='\0';
+	return str;
 }
 astr rstr_to_astr(char* _str){
 	int counter=0;
@@ -162,14 +164,15 @@ intarray find_astr(astr _astr, char* str){
 		counter=0;
 	}
 
-	free(tmp_astr->data);
-	free(tmp_astr);
+	
+	astr_destroy(tmp_astr);
 	return tmp_intarray;
 }
 
 intarray astr_proper_find(astr _astr, char* str){
 	intarray tmp_intarray=zero_length_intarray(2);
 	astr tmp_astr= rstr_to_astr(str);
+	
 	int counter=0;
 	for(int i=0; i<_astr->length; i++){
 		for(int j=0; j<tmp_astr->length && i+j<_astr->length; j++){
@@ -184,8 +187,8 @@ intarray astr_proper_find(astr _astr, char* str){
 		counter=0;
 	}
 
-	free(tmp_astr->data);
-	free(tmp_astr);
+	
+	astr_destroy(tmp_astr);
 	return tmp_intarray;
 }
 astr astr_substr(astr _astr, int start, int end){
@@ -212,6 +215,6 @@ void astr_delete_from_to(astr _astr, int start
 	}
 	_astr->length-=(_astr->length-start);
 	d_astr_concat(_astr,tmp);
-	free(tmp->data);
-	free(tmp);
+        GLOBAL_ALLOC_MEMO-=end-start;
+	astr_destroy(tmp);
 }

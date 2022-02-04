@@ -4,7 +4,7 @@
 #include "tools.h"
 
 intarray init_intarray(int length, int alloc){
-  intarray int_array=sp_alloc(sizeof(intarray));
+        intarray int_array=sp_alloc(sizeof(intarray));
 	int_array->length=length;
 	int_array->alloc=alloc;
 	int_array->data=sp_alloc(sizeof(int)*int_array->alloc);
@@ -23,10 +23,8 @@ void print_intarray(intarray int_array){
 	printf("]\n");
 }
 void intarray_destroy(intarray int_array){
-  if(int_array!=NULL){
     sp_destroy(int_array->data, sizeof(int)*int_array->alloc);
     sp_destroy(int_array,sizeof(int_array));
-  }
 }
 void insert_intarray(intarray int_array, 
 	int index, int value){
@@ -45,7 +43,7 @@ void add_intarray(intarray int_array, int value){
 	}
 }
 intarray clone_intarray(intarray int_array){
-	intarray new_intarray;
+        intarray new_intarray=sp_alloc(sizeof(intarray));
 	new_intarray->data=sp_alloc(sizeof(int)*int_array->alloc);
 	new_intarray->length=int_array->length;
 	new_intarray->alloc=int_array->alloc;
@@ -58,6 +56,7 @@ intarray clone_intarray(intarray int_array){
 void resize_intarray(intarray int_array){
 	int_array->data=(int *) realloc(int_array->data,
 		 (2*int_array->alloc)*sizeof(int));
+	GLOBAL_ALLOC_MEMO+=int_array->alloc;
 	int_array->alloc=2*int_array->alloc;
 }
 void asc_sort_intarray(intarray int_array){
