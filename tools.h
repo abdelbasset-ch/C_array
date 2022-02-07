@@ -8,7 +8,7 @@ extern int GLOBAL_ALLOC_MEMO;
 void int_swap(int* a, int* b);
 void char_swap(char* a, char* b);
 void* sp_alloc(int alloc);
-void destroy(void* p,int p_len);
+
 void sp_destroy(void* p,int p_alloc);
 void check_memo_alloc();
 void global_alloc_init();

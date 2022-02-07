@@ -32,9 +32,9 @@ intarray find_astr(astr _astr, char* str);
 intarray astr_proper_find(astr _astr, char* str);
 astr astr_substr(astr _astr, int start, int end);
 void astr_delete_from_to(astr _astr, int start, int end);
-//astr astr_trim(astr _astr);
-//void astr_replace_from_to(astr* _astr, int start, int end);
-//void astr_delete(astr* _astr,char* _char);
-//void astr_replace(astr* _astr,char* _char);
+astr astr_trim(astr _astr);
+void astr_replace_from_to(astr _astr,char* str, int start, int end);
+void astr_delete(astr _astr,char* str);
+void astr_replace(astr _astr,char* _str1, char* _str2);
 
 #endif

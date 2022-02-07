@@ -205,7 +205,7 @@ astr astr_substr(astr _astr, int start, int end){
 
 void astr_delete_from_to(astr _astr, int start
 , int end){
-	if(start>=_astr->length || end>=_astr->length){
+	if(start>=_astr->length || end>_astr->length){
 		printf("indexes must be in the range of astr length\n");
 		return;
 	}
@@ -215,6 +215,42 @@ void astr_delete_from_to(astr _astr, int start
 	}
 	_astr->length-=(_astr->length-start);
 	d_astr_concat(_astr,tmp);
-        GLOBAL_ALLOC_MEMO-=end-start;
 	astr_destroy(tmp);
+}
+astr astr_trim(astr _astr){
+  astr clone=clone_astr(_astr);
+  while(clone->data[0]==' '){
+    astr_delete_from_to(clone, 0, 1);
+  }
+  while(clone->data[clone->length-1]==' '){
+    astr_delete_from_to(clone,clone->length-1,clone->length);
+    }
+  return clone;
+}
+void astr_replace_from_to(astr _astr,char* str, int start, int end){
+  astr tmp=rstr_to_astr(str);
+  astr sub=astr_substr(_astr,end,_astr->length);
+  astr_delete_from_to(_astr,start,_astr->length);
+  d_astr_concat(_astr,tmp);
+  d_astr_concat(_astr,sub);
+  astr_destroy(tmp);
+  astr_destroy(sub);
+  
+}
+void astr_delete(astr _astr,char* str){
+  astr _str=rstr_to_astr(str);
+  intarray find=astr_proper_find(_astr,str);
+  astr_delete_from_to(_astr,find->data[0],find->data[0]+_str->length);
+  astr_destroy(_str);
+  intarray_destroy(find);
+  
+}
+void astr_replace(astr _astr, char* _str1, char* _str2){
+  astr astr1=rstr_to_astr(_str1);
+  astr astr2=rstr_to_astr(_str2);
+  intarray find=astr_proper_find(_astr,_str1);
+  astr_replace_from_to(_astr,_str2,find->data[0],find->data[0]+astr1->length);
+  astr_destroy(astr1);
+  astr_destroy(astr2);
+  intarray_destroy(find);
 }
