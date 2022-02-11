@@ -12,6 +12,12 @@ void char_swap(char* a, char* b){
 	*a=*b;
 	*b=tmp;
 }
+void astr_swap(astr a, astr b){
+  astr tmp=astr_clone(a);
+  a=b;
+  b=tmp;
+  astr_destroy(tmp);
+}
 void* sp_alloc(int alloc){
   void* p=malloc(alloc);
   GLOBAL_ALLOC_MEMO+=alloc;
