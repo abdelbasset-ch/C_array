@@ -1,6 +1,7 @@
 #include "tools.h"
 #include <stdlib.h>
 #include <stdio.h>
+
 int GLOBAL_ALLOC_MEMO=0;
 void int_swap(int* a, int* b){
 	int tmp=*a;
@@ -13,7 +14,7 @@ void char_swap(char* a, char* b){
 	*b=tmp;
 }
 void astr_swap(astr a, astr b){
-  astr tmp=astr_clone(a);
+  astr tmp=clone_astr(a);
   a=b;
   b=tmp;
   astr_destroy(tmp);

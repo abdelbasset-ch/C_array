@@ -2,12 +2,29 @@
 #include <stdio.h>
 #include "tools.h"
 #include "intarray.h"
+#include "string_array.h"
 #include "astr.h"
 
 int main(){
   global_alloc_init();
   {
-    astr _astr=rstr_to_astr("  tototogo");
+    string_array str_arr=zero_length_string_array(1);
+    
+    astr _astr=rstr_to_astr("hello");
+    
+    string_array_add(str_arr,_astr);
+    astr _astr1=rstr_to_astr("by");
+    
+    string_array_add(str_arr,_astr1);
+    printf("\nlength = %d\n",str_arr->length);
+    
+    print_string_array(str_arr);
+    
+    string_array_destroy(str_arr);
+    astr_destroy(_astr);
+    astr_destroy(_astr1);
+   
+    /*astr _astr=rstr_to_astr("  tototogo");
     astr c_astr=astr_trim(_astr);
     printf("astr : ");
     print_astr(_astr);
@@ -44,7 +61,7 @@ int main(){
     astr_destroy(c_astr);
     printf("%d\n",GLOBAL_ALLOC_MEMO);
     astr_destroy(_astr);
-    //astr_destroy(sub_astr);
+    //astr_destroy(sub_astr);*/
    
   }
 check_memo_alloc();

@@ -1,5 +1,6 @@
 #ifndef TOOLS_H__
 #define TOOLS_H__
+#include "astr.h"
 // GLOBAL_ALLOC_MEMO keeps track of the dynamic allocated memory to avoid memory leak 
 extern int GLOBAL_ALLOC_MEMO;
 #define sum(a,b) a+b

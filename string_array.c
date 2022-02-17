@@ -2,10 +2,13 @@
 #include <stdio.h>
 #include "tools.h"
 #include "astr.h"
+#include "string_array.h"
+#include "intarray.h"
 
 string_array string_array_init(int alloc, int length){
   string_array str_arr=sp_alloc(sizeof(string_array));
   str_arr->alloc=alloc;
+
   str_arr->length=length;
   str_arr->data=sp_alloc(sizeof(astr)*alloc);
   for(int i=0;i<alloc;i++){
@@ -20,32 +23,34 @@ string_array zero_length_string_array(int alloc){
 string_array string_array_clone(string_array str_arr){
   string_array str_clone=string_array_init(str_arr->alloc, str_arr->length);
   for(int i=0;i<str_clone->length;i++){
-    str_clone->data[i]=clone_astr(str_arr->data[i])
+    str_clone->data[i]=clone_astr(str_arr->data[i]);
   }
   return str_clone;
 }
 void print_string_array(string_array str_arr){
   for(int i=0;i<str_arr->length;i++){
     print_astr(str_arr->data[i]);
-    printf(" ");
+    
   }
 }
 void string_array_insert(string_array str_arr, astr _astr, int index){
   if(index<str_arr->length){
-    sp_destroy(str_arr->data[index]);
-    str_arr->data[index]=astr_clone(_astr);
+    //astr_destroy(str_arr->data[index]);
+    str_arr->data[index]=clone_astr(_astr);
   }
 }
 void string_array_add(string_array str_arr,astr _astr){
-  int index=str_arr->length;
-  if(str_arr->length>=str_arr->alloc){
+  if( str_arr->length>=str_arr->alloc){
     string_array_resize(str_arr);
     string_array_add(str_arr,_astr);
   }else{
-    string_array_insert(str_arr,_astr,index);
+    str_arr->length++;
+    string_array_insert(str_arr,_astr,str_arr->length-1);
   }
 }
 void string_array_resize(string_array str_arr){
+  str_arr->data=realloc(str_arr->data,2*str_arr->alloc);
+  GLOBAL_ALLOC_MEMO+=str_arr->alloc;
   str_arr->alloc+=str_arr->alloc;
 }
 
@@ -69,44 +74,46 @@ intarray find_string_array(string_array str_arr, astr _astr){
   intarray find=zero_length_intarray(1);
   for(int i=0; i<str_arr->length;i++){
     if(compare_astr(str_arr->data[i],_astr)==0){
-      intarray_add(find,i);
+      add_intarray(find,i);
     }
   }
   return find;
 }
 void string_array_destroy(string_array str_arr){
-  for(int i=0;i<str_arr->alloc;i++){
+  for(int i=0;i<str_arr->length;i++){
     astr_destroy(str_arr->data[i]);
   }
-  sp_destroy(str_arr);
+  sp_destroy(str_arr->data,str_arr->alloc);
+  sp_destroy(str_arr,sizeof(str_arr));
+  
 }
 string_array string_array_asc_order(string_array str_arr){
   string_array tmp_str=zero_length_string_array(1);
   for(int i=0; i<str_arr->length;i++){
-    astr _astr=astr_clone(str_arr->data[i]);
+    astr _astr=clone_astr(str_arr->data[i]);
     for(int j=i;j<str_arr->length;j++){
       if(compare_astr(_astr,str_arr->data[j])==-1){
-	sp_destroy(_astr);
-	_astr=astr_clone(str_arr->data[j]);
+	astr_destroy(_astr);
+	_astr=clone_astr(str_arr->data[j]);
       }
     }
     string_array_add(tmp_str,_astr);
-    sp_destroy(_astr);
+    astr_destroy(_astr);
   }
   return tmp_str;
 }
 string_array string_array_desc_order(string_array str_arr){
  string_array tmp_str=zero_length_string_array(1);
   for(int i=0; i<str_arr->length;i++){
-    astr _astr=astr_clone(str_arr->data[i]);
+    astr _astr=clone_astr(str_arr->data[i]);
     for(int j=i;j<str_arr->length;j++){
       if(compare_astr(_astr,str_arr->data[j])==1){
-	sp_destroy(_astr);
-	_astr=astr_clone(str_arr->data[j]);
+	astr_destroy(_astr);
+	_astr=clone_astr(str_arr->data[j]);
       }
     }
     string_array_add(tmp_str,_astr);
-    sp_destroy(_astr);
+    astr_destroy(_astr);
   }
   return tmp_str;
 }
