@@ -4,26 +4,30 @@
 #include "intarray.h"
 #include "string_array.h"
 #include "astr.h"
-
+#define VNAME(x) #x
 int main(){
   global_alloc_init();
   {
     string_array str_arr=zero_length_string_array(1);
-    
+    //printf("%d\n",GLOBAL_ALLOC_MEMO);
     astr _astr=rstr_to_astr("hello");
-    
+    //printf("%d\n",GLOBAL_ALLOC_MEMO);
     string_array_add(str_arr,_astr);
     astr _astr1=rstr_to_astr("by");
-    
+    //printf("%d\n",GLOBAL_ALLOC_MEMO);
     string_array_add(str_arr,_astr1);
-    printf("\nlength = %d\n",str_arr->length);
+    //printf("\nlength = %d\n",str_arr->length);
     
     print_string_array(str_arr);
     
     string_array_destroy(str_arr);
+
+    //printf("%d\n",GLOBAL_ALLOC_MEMO);
     astr_destroy(_astr);
+    //printf("%d\n",GLOBAL_ALLOC_MEMO);
     astr_destroy(_astr1);
-   
+    //astr_destroy(_astr);
+    //astr_destroy(_astr1);
     /*astr _astr=rstr_to_astr("  tototogo");
     astr c_astr=astr_trim(_astr);
     printf("astr : ");

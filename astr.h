@@ -2,7 +2,7 @@
 #define ASTR
 #include "intarray.h"
 #define rstr char*
-typedef struct _astr S_astr;
+typedef struct _astr s_astr;
 typedef struct _astr* astr;
 
 struct _astr {

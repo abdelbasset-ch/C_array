@@ -4,18 +4,16 @@
 #include "astr.h"
 #include "string_array.h"
 #include "intarray.h"
-
+//#define VNAME(x) #x
 string_array string_array_init(int alloc, int length){
-  string_array str_arr=sp_alloc(sizeof(string_array));
+  string_array str_arr=(string_array) sp_alloc(sizeof(s_string_array));
   str_arr->alloc=alloc;
-
   str_arr->length=length;
-  str_arr->data=sp_alloc(sizeof(astr)*alloc);
+  str_arr->data=(astr*) sp_alloc(sizeof(astr)*alloc);
   for(int i=0;i<alloc;i++){
     str_arr->data[i]=NULL;
   }
   return str_arr;
-  
 }
 string_array zero_length_string_array(int alloc){
   return string_array_init(alloc,0);
@@ -49,9 +47,11 @@ void string_array_add(string_array str_arr,astr _astr){
   }
 }
 void string_array_resize(string_array str_arr){
-  str_arr->data=realloc(str_arr->data,2*str_arr->alloc);
-  GLOBAL_ALLOC_MEMO+=str_arr->alloc;
+  //sp_destroy(str_arr->data,str_arr->alloc);
+  str_arr->data=realloc(str_arr->data,(2*str_arr->alloc)*sizeof(astr));
+  GLOBAL_ALLOC_MEMO+=str_arr->alloc*sizeof(astr);
   str_arr->alloc+=str_arr->alloc;
+  
 }
 
 string_array concat_string_array(string_array str_arr1, string_array str_arr2){
@@ -83,9 +83,8 @@ void string_array_destroy(string_array str_arr){
   for(int i=0;i<str_arr->length;i++){
     astr_destroy(str_arr->data[i]);
   }
-  sp_destroy(str_arr->data,str_arr->alloc);
-  sp_destroy(str_arr,sizeof(str_arr));
-  
+  sp_destroy(str_arr->data,str_arr->alloc*sizeof(astr));
+  sp_destroy(str_arr,sizeof(string_array));
 }
 string_array string_array_asc_order(string_array str_arr){
   string_array tmp_str=zero_length_string_array(1);

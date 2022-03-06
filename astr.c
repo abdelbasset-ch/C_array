@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include "astr.h"
 #include "tools.h"
-
+//#define VNAME(x) #x
 
 astr init_astr(int length, int alloc){
-        astr tmp_astr=sp_alloc(sizeof (astr));
+        astr tmp_astr=(astr) sp_alloc(sizeof(s_astr));
 	tmp_astr->length=length;
 	tmp_astr->alloc=alloc;
 	tmp_astr->data=sp_alloc(sizeof(char)*(tmp_astr->alloc));
@@ -19,9 +19,9 @@ astr zero_length_astr(int alloc){
 }
 void astr_destroy(astr _astr){
   
-    sp_destroy(_astr->data,sizeof(char)*_astr->alloc);
-    sp_destroy(_astr,sizeof(_astr));
-  
+    sp_destroy(_astr->data,_astr->alloc*sizeof(char));
+    sp_destroy(_astr,sizeof(s_astr));
+ 
 }
 
 void print_astr(astr _astr){
@@ -60,8 +60,8 @@ astr clone_astr(astr _astr){
 }
 void resize_astr(astr _astr){
 	_astr->data=(char *) realloc(_astr->data,
-		 (2*_astr->alloc)*sizeof(char));
-	GLOBAL_ALLOC_MEMO+=_astr->alloc;
+				     (2*_astr->alloc)*sizeof(char));
+	GLOBAL_ALLOC_MEMO+=_astr->alloc*sizeof(char);
 	_astr->alloc=2*_astr->alloc;
 	
 }
