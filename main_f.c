@@ -4,11 +4,34 @@
 #include "intarray.h"
 #include "string_array.h"
 #include "astr.h"
-#define VNAME(x) #x
+#include <math.h>
+
 int main(){
   global_alloc_init();
   {
-    string_array str_arr=zero_length_string_array(1);
+    float a=(float)puissance_iter(4,-1);
+    printf("%f\n",a);
+    float b=puissance_recu(4,-1);
+    printf("%f\n",b);
+    float c=puissance_alex(4,-1);
+    printf("%f\n",c);
+    /*intarray int_array=zero_length_intarray(1);
+    long int a=1000000000;
+    int l=sqrt(a);
+    for(int i=1;i<l;i++){
+      if(a%i==0){
+	add_intarray(int_array,i);
+        add_intarray(int_array,a/i);}
+	}
+    asc_sort_intarray(int_array);
+    print_intarray(int_array);*/
+    /*long int a=1000000000;
+    //int l=sqrt(a);
+    for(int i=1;i<=a;i++){
+      if(a%i==0)
+	printf(" %d",i);
+	}*/
+    /*string_array str_arr=zero_length_string_array(1);
     //printf("%d\n",GLOBAL_ALLOC_MEMO);
     astr _astr=rstr_to_astr("hello");
     //printf("%d\n",GLOBAL_ALLOC_MEMO);
@@ -25,7 +48,7 @@ int main(){
     //printf("%d\n",GLOBAL_ALLOC_MEMO);
     astr_destroy(_astr);
     //printf("%d\n",GLOBAL_ALLOC_MEMO);
-    astr_destroy(_astr1);
+    astr_destroy(_astr1);*/
     //astr_destroy(_astr);
     //astr_destroy(_astr1);
     /*astr _astr=rstr_to_astr("  tototogo");

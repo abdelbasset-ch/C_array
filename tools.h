@@ -20,5 +20,9 @@ void sp_destroy(void* p,int p_alloc);
 void check_memo_alloc();
 //initiate GLOBAL ALLOC_MEMO to 0
 void global_alloc_init();
+float puissance_iter(int a,int b);
+float puissance_recu(int a, int b);
+float puissance_alex(int a, int b);
+int random_int(int a, int b);
 
 #endif

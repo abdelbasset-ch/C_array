@@ -1,8 +1,8 @@
 test.out : main_f.o tools.o intarray.o astr.o string_array.o
-	gcc main_f.o tools.o intarray.o astr.o string_array.o -o test.out
+	gcc main_f.o tools.o intarray.o astr.o string_array.o -o test.out -lm
 
-main_f.o : main_f.c tools.h intarray.h astr.h
-	gcc -c main_f.c
+main_f.o : main_f.c tools.h intarray.h astr.h 
+	gcc -c main_f.c 
 
 tools.o : tools.c tools.h
 	gcc -c tools.c
