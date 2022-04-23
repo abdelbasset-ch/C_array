@@ -5,16 +5,29 @@
 #include "string_array.h"
 #include "astr.h"
 #include <math.h>
+#include "charray2d.h"
 
 int main(){
   global_alloc_init();
   {
-    float a=(float)puissance_iter(4,-1);
+    charray2d c=charray2d_create(5,10,'.');
+    for(int i=1;i<4;i++){
+      for(int j=1;j<6;j++){
+	charray2d_insert(c,i,j,(char)j+48);
+      }
+      }
+    printf("%c\n",c->_data[1][2]);
+    c->_data[1][2]='i';
+     c->_data[2][3]='k';
+    //charray2d_insert(c,3,4,'#');
+    charray2d_print(c);
+    charray2d_destroy(&c);
+    /*float a=(float)puissance_iter(4,-1);
     printf("%f\n",a);
     float b=puissance_recu(4,-1);
     printf("%f\n",b);
     float c=puissance_alex(4,-1);
-    printf("%f\n",c);
+    printf("%f\n",c);*/
     /*intarray int_array=zero_length_intarray(1);
     long int a=1000000000;
     int l=sqrt(a);

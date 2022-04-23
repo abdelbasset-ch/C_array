@@ -17,11 +17,11 @@ astr init_astr(int length, int alloc){
 astr zero_length_astr(int alloc){
 	return  init_astr(0,alloc);
 }
-void astr_destroy(astr _astr){
-  
-    sp_destroy(_astr->data,_astr->alloc*sizeof(char));
-    sp_destroy(_astr,sizeof(s_astr));
- 
+void astr_destroy(astr* _astr){
+  astr a=*_astr;
+  sp_destroy(a->data,a->alloc*sizeof(char));
+  sp_destroy(a,sizeof(s_astr));
+  *_astr=NULL;
 }
 
 void print_astr(astr _astr){
@@ -165,7 +165,7 @@ intarray find_astr(astr _astr, char* str){
 	}
 
 	
-	astr_destroy(tmp_astr);
+	astr_destroy(&tmp_astr);
 	return tmp_intarray;
 }
 
@@ -188,7 +188,7 @@ intarray astr_proper_find(astr _astr, char* str){
 	}
 
 	
-	astr_destroy(tmp_astr);
+	astr_destroy(&tmp_astr);
 	return tmp_intarray;
 }
 astr astr_substr(astr _astr, int start, int end){
@@ -215,7 +215,7 @@ void astr_delete_from_to(astr _astr, int start
 	}
 	_astr->length-=(_astr->length-start);
 	d_astr_concat(_astr,tmp);
-	astr_destroy(tmp);
+	astr_destroy(&tmp);
 }
 astr astr_trim(astr _astr){
   astr clone=clone_astr(_astr);
@@ -233,16 +233,16 @@ void astr_replace_from_to(astr _astr,char* str, int start, int end){
   astr_delete_from_to(_astr,start,_astr->length);
   d_astr_concat(_astr,tmp);
   d_astr_concat(_astr,sub);
-  astr_destroy(tmp);
-  astr_destroy(sub);
+  astr_destroy(&tmp);
+  astr_destroy(&sub);
   
 }
 void astr_delete(astr _astr,char* str){
   astr _str=rstr_to_astr(str);
   intarray find=astr_proper_find(_astr,str);
   astr_delete_from_to(_astr,find->data[0],find->data[0]+_str->length);
-  astr_destroy(_str);
-  intarray_destroy(find);
+  astr_destroy(&_str);
+  intarray_destroy(&find);
   
 }
 void astr_replace(astr _astr, char* _str1, char* _str2){
@@ -250,7 +250,7 @@ void astr_replace(astr _astr, char* _str1, char* _str2){
   astr astr2=rstr_to_astr(_str2);
   intarray find=astr_proper_find(_astr,_str1);
   astr_replace_from_to(_astr,_str2,find->data[0],find->data[0]+astr1->length);
-  astr_destroy(astr1);
-  astr_destroy(astr2);
-  intarray_destroy(find);
+  astr_destroy(&astr1);
+  astr_destroy(&astr2);
+  intarray_destroy(&find);
 }

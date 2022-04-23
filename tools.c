@@ -29,7 +29,6 @@ void* sp_alloc(int alloc){
 
 void sp_destroy(void* p,int p_alloc){
   free(p);
-  p=NULL;
   GLOBAL_ALLOC_MEMO-=p_alloc;
    
 }

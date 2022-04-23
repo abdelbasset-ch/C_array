@@ -79,12 +79,14 @@ intarray find_string_array(string_array str_arr, astr _astr){
   }
   return find;
 }
-void string_array_destroy(string_array str_arr){
-  for(int i=0;i<str_arr->length;i++){
-    astr_destroy(str_arr->data[i]);
+void string_array_destroy(string_array* str_arr){
+  string_array a=*str_arr;
+  for(int i=0;i<a->length;i++){
+    astr_destroy(&a->data[i]);
   }
-  sp_destroy(str_arr->data,str_arr->alloc*sizeof(astr));
-  sp_destroy(str_arr,sizeof(string_array));
+  sp_destroy(a->data,a->alloc*sizeof(astr));
+  sp_destroy(a,sizeof(string_array));
+  *str_arr=NULL;
 }
 string_array string_array_asc_order(string_array str_arr){
   string_array tmp_str=zero_length_string_array(1);
@@ -92,12 +94,12 @@ string_array string_array_asc_order(string_array str_arr){
     astr _astr=clone_astr(str_arr->data[i]);
     for(int j=i;j<str_arr->length;j++){
       if(compare_astr(_astr,str_arr->data[j])==-1){
-	astr_destroy(_astr);
+	astr_destroy(&_astr);
 	_astr=clone_astr(str_arr->data[j]);
       }
     }
     string_array_add(tmp_str,_astr);
-    astr_destroy(_astr);
+    astr_destroy(&_astr);
   }
   return tmp_str;
 }
@@ -107,12 +109,12 @@ string_array string_array_desc_order(string_array str_arr){
     astr _astr=clone_astr(str_arr->data[i]);
     for(int j=i;j<str_arr->length;j++){
       if(compare_astr(_astr,str_arr->data[j])==1){
-	astr_destroy(_astr);
+	astr_destroy(&_astr);
 	_astr=clone_astr(str_arr->data[j]);
       }
     }
     string_array_add(tmp_str,_astr);
-    astr_destroy(_astr);
+    astr_destroy(&_astr);
   }
   return tmp_str;
 }

@@ -22,9 +22,11 @@ void print_intarray(intarray int_array){
 	}
 	printf("]\n");
 }
-void intarray_destroy(intarray int_array){
-    sp_destroy(int_array->data, sizeof(int)*int_array->alloc);
-    sp_destroy(int_array,sizeof(s_intarray));
+void intarray_destroy(intarray* int_array){
+  intarray a=*int_array;
+    sp_destroy(a->data, sizeof(int)*a->alloc);
+    sp_destroy(a,sizeof(s_intarray));
+    *int_array=NULL;
 }
 void insert_intarray(intarray int_array, 
 	int index, int value){

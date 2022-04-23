@@ -11,7 +11,7 @@ struct _intarray {
 intarray init_intarray(int length, int alloc);
 //initialize intarray with length=0
 intarray zero_length_intarray(int alloc);
-void intarray_destroy(intarray int_array);
+void intarray_destroy(intarray* int_array);
 void print_intarray(intarray int_array);
 void insert_intarray(intarray int_array, 
 	int index, int value);

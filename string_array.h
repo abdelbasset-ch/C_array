@@ -26,7 +26,7 @@ void d_string_array_concat(string_array str_arr1, string_array str_arr2);
 //returns all ocurrences of a astr 
 intarray find_string_array(string_array _string_array, astr _astr);
 //free allocated memory
-void string_array_destroy(string_array str_arr);
+void string_array_destroy(string_array* str_arr);
 string_array string_array_asc_order(string_array str_arr);
 string_array string_array_desc_order(string_array str_arr);
 
