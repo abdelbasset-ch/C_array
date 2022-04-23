@@ -2,4 +2,4 @@
 *.o~
 *.h~
 test.out
-.gitignore
+!.gitignore
