@@ -19,7 +19,7 @@ void astr_swap(astr a, astr b){
   astr tmp=clone_astr(a);
   a=b;
   b=tmp;
-  astr_destroy(tmp);
+  astr_destroy(&tmp);
 }
 void* sp_alloc(int alloc){
   void* p=malloc(alloc);
