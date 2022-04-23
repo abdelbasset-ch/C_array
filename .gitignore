@@ -1,3 +1,5 @@
 *.o
+*.o~
+*.h~
 test.out
 !.gitignore
